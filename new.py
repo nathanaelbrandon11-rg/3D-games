@@ -1,7 +1,7 @@
 #---------------------------------------------IMPORTS---------------------------------------------#
 from pathlib import Path
 from direct.showbase.ShowBase import ShowBase
-
+from panda3d.core import DirectionalLight, AmbientLight
 
 
 
@@ -42,7 +42,7 @@ class Game(ShowBase):
         self.model_block['dirt'] = self.loader.loadModel("dirt-block.glb")
         self.model_block['sand'] = self.loader.loadModel("sand-block.glb")
 
-        # Try to load the FBX shell and, if a texture file is present, apply it.
+        # Load the exact FBX file path you specified.
         self.model_block['blue_shell'] = self._load_model_with_optional_texture(
             "blue_shell.fbx",
             ["blue_shell", "blue-shell"]
@@ -61,6 +61,20 @@ class Game(ShowBase):
         # Keep the function, but only generate a single shell.
         self.make_block(0, 0, 0, 'blue_shell', color=(0.2, 0.5, 1.0, 1.0))
 
+
+
+
+    def atur_cahaya(self):
+        matahari = DirectionalLight('matahari')
+        matahari.setColor((0.8, 0.8, 0.8, 1))
+        matahari_node = self.render.attachNewNode(matahari)
+        matahari_node.setHpr(-45, -45, 0)
+        self.render.setLight(matahari_node)
+
+        suasana = AmbientLight('suasana')
+        suasana.setColor((0.4, 0.4 , 0.4, 1))
+        suasana_node = self.render.attachNewNode(suasana)
+        self.render.setLight(suasana_node)
 
 game = Game()
 # No extra world loop here, or it would create many shells.
