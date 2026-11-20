@@ -6,6 +6,7 @@ from panda3d.core import (
     AmbientLight,
     Vec3,
     Point3,
+    Filename,
     BitMask32,
     TextNode,
     WindowProperties,
@@ -128,7 +129,7 @@ class Game(ShowBase):
             ["blue_shell", "blue-shell"]
         )
         self.model_block['redstone_monstrosity'] = self.loader.loadModel(
-            "redstone_monstrosity.glb"
+            "redstone_monstrosity_static.glb"
         )
 
     def make_block(self, x, y, z, jenis, color=None):
@@ -208,8 +209,11 @@ class Game(ShowBase):
         self.render.setLight(suasana_node)
 
     def crosshair(self):
+        self.crosshair_texture = self.loader.loadTexture(
+            Filename.from_os_specific(str(Path(__file__).with_name("crosshair.png")))
+        )
         self.crosshair_image = OnscreenImage(
-            image=str(Path(__file__).with_name("crosshair.png")),
+            image=self.crosshair_texture,
             pos=(0, 0, 0),
             scale=0.05
         )
